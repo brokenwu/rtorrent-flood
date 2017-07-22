@@ -14,9 +14,9 @@ EXPOSE 55950-56000
 EXPOSE 6881
 
 #Install packages
-RUN apt-get update -y && \
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \ 
+    apt-get update -y && \
     apt-get upgrade -y && \
-    curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
     apt-get install -y \
     git \
     build-essential \
@@ -38,8 +38,7 @@ RUN apt-get update -y && \
     libcppunit-dev \
     libcurl3 \
     libcurl4-openssl-dev \
-    nodejs \
-    npm
+    nodejs
     
 
 COPY entrypoint /entrypoint
