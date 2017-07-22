@@ -84,7 +84,8 @@ Then go to http://localhost/ and go through the wizard.
 
 ## Persistent data
 
-* -v /`<mydatalocation>`:/downloads
+* -v /`<mydatalocation>`:/downloads (Save all download from rtorrent)
+* -v /`<mydatalocation>`:/root/ (save configuration file from rtorrent)
 
 ## Via docker-compose
 

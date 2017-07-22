@@ -79,7 +79,6 @@ RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
     chmod +x /entrypoint/*sh && \
     chmod +x /entrypoint/entrypoint.d/*.sh
 
-
 WORKDIR /var/www/flood
 
 ENTRYPOINT ["/bin/bash", "/entrypoint/entrypoint.sh"]
