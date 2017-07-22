@@ -45,7 +45,7 @@ COPY entrypoint /entrypoint
 COPY .rtorrent.rc /root/.rtorrent.rc
 COPY rtorrent /etc/init.d/rtorrent
 
-#Setup rtorrent + libtorrent
+#Setup xmlrpc & libtorrent & rtorrent & flood
 RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
     cd /tmp/xmlrpc-c && \
     ./configure --disable-libwww-client --disable-wininet-client --disable-abyss-server --disable-cgi-server && \
@@ -59,7 +59,7 @@ RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
     make -j2 && \
     make install && \
     cd /tmp && \
-    curl http://rtorrent.net/downloads/rtorrent-RTORRENT_VERSION.tar.gz | tar xz && \
+    curl http://rtorrent.net/downloads/rtorrent-$RTORRENT_VERSION.tar.gz | tar xz && \
     cd rtorrent-$RTORRENT_VERSION && \
     ./autogen.sh && \
     ./configure --with-xmlrpc-c && \
@@ -69,10 +69,8 @@ RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
     mkdir -p /downloads/{.session,~watch} && \
     chown -R root:root /downloads && \
     chmod +x /etc/init.d/rtorrent && \
-    update-rc.d rtorrent defaults 99
-
-#Setup flood
-RUN git https://github.com/jfurrow/flood.git /var/www/flood && \
+    update-rc.d rtorrent defaults 99 && \
+    git clone https://github.com/jfurrow/flood.git /var/www/flood && \
     cd /var/www/flood && \
     cp config.template.js config.js && \
     npm install --production && \

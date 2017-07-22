@@ -9,9 +9,9 @@
 This image is updated via pull requests to the tle06/rtorrent-flood GitHub repo.
 
 # Sources
-[website](https://github.com/jfurrow/flood)
-
 [github/flood](https://github.com/jfurrow/flood)
+
+[rtorrent/libtorrent](https://jes.sc/kb/rTorrent-ruTorrent-Seedbox-Guide.php#rTorrent+LibTorrent+XML-RPC)
 
 # What is flood
 Flood is another web interface for rtorrent. It implements a Node.js server for communicating with the rTorrent API, storing historical data, and serving the web UI.
@@ -83,8 +83,6 @@ $ docker run -d --restart=always -p 80:3000 tlnk/rtorrent-flood
 Then go to http://localhost/ and go through the wizard.
 
 ## Persistent data
-
-All data beyond what lives in the database (file uploads, etc) is stored within the default volume /var/www/owncloud. With this volume, ownCloud will only be updated when the file version.php is not present.
 
 * -v /`<mydatalocation>`:/downloads
 
