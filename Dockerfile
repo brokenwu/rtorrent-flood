@@ -82,7 +82,7 @@ RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
 WORKDIR /var/www/flood
 
 ENTRYPOINT ["/bin/bash", "/entrypoint/entrypoint.sh"]
-CMD ["npm start"]
+CMD [ "npm", "start" ]
 
 LABEL org.label-schema.version=$VERSION
 LABEL org.label-schema.build-date=$BUILD_DATE
