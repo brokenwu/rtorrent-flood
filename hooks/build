@@ -2,6 +2,8 @@
 source .env
 
 docker build \
+  --build-arg RTORRENT_VERSION=${RTORRENT_VERSION} \
+  --build-arg LIBTORRENT_VERSION=${LIBTORRENT_VERSION} \
   --build-arg VERSION=${VERSION} \
   --build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
   --build-arg VCS_REF=$(git rev-parse --short HEAD) \
