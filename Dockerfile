@@ -45,7 +45,7 @@ COPY entrypoint /entrypoint
 COPY .rtorrent.rc /root/.rtorrent.rc
 COPY rtorrent /etc/init.d/rtorrent
 
-#Setup xmlrpc & libtorrent & rtorrent & flood
+#Setup xmlrpc & libtorrent & rtorrent
 RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
     cd /tmp/xmlrpc-c && \
     ./configure --disable-libwww-client --disable-wininet-client --disable-abyss-server --disable-cgi-server && \
@@ -69,8 +69,10 @@ RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
     mkdir -p /downloads/{.session,~watch} && \
     chown -R root:root /downloads && \
     chmod +x /etc/init.d/rtorrent && \
-    update-rc.d rtorrent defaults 99 && \
-    git clone https://github.com/jfurrow/flood.git /var/www/flood && \
+    update-rc.d rtorrent defaults
+
+#Setup flood    
+RUN git clone https://github.com/jfurrow/flood.git /var/www/flood && \
     cd /var/www/flood && \
     cp config.template.js config.js && \
     npm install --production && \
