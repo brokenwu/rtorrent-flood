@@ -37,13 +37,10 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
     libsigc++-2.0-dev \
     libcppunit-dev \
     libcurl3 \
-    libcurl4-openssl-dev \
-    nodejs
-    
+    libcurl4-openssl-dev
 
-COPY entrypoint /entrypoint
-COPY .rtorrent.rc /root/.rtorrent.rc
-COPY rtorrent /etc/init.d/rtorrent
+
+
 
 #Setup xmlrpc & libtorrent & rtorrent
 RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
@@ -67,19 +64,34 @@ RUN svn co -q https://svn.code.sf.net/p/xmlrpc-c/code/stable /tmp/xmlrpc-c && \
     make install && \
     ldconfig && \
     mkdir -p /downloads/{.session,~watch} && \
-    chown -R root:root /downloads && \
-    chmod +x /etc/init.d/rtorrent && \
-    update-rc.d rtorrent defaults
+    chown -R root:root /downloads
 
 #Setup flood    
 RUN git clone https://github.com/jfurrow/flood.git /var/www/flood && \
     cd /var/www/flood && \
-    cp config.template.js config.js && \
-    npm install --production && \
-    apt-get clean && \
-    rm -rf /tmp && \
+    cp config.template.js config.js
+
+
+COPY entrypoint /entrypoint
+COPY .rtorrent.rc /root/.rtorrent.rc
+COPY rtorrent /etc/init.d/rtorrent
+
+#Setup NPM
+RUN apt-get install -y nodejs && \
+    npm cache clean -f && \
+    npm install -g n && \
+    n 6.9.5 && \
+    cd /var/www/flood && \
+    npm install --production
+
+#Last config + clean
+RUN chmod +x /etc/init.d/rtorrent && \
+    update-rc.d rtorrent defaults && \
     chmod +x /entrypoint/*sh && \
-    chmod +x /entrypoint/entrypoint.d/*.sh
+    chmod +x /entrypoint/entrypoint.d/*.sh && \
+    apt-get clean && \
+    rm -rf /tmp/*
+
 
 WORKDIR /var/www/flood
 
