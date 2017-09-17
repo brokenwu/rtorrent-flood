@@ -17,6 +17,7 @@ FLOOD_SSLKEY="${FLOOD_SSLKEY:=/absolute/path/to/key/}"
 FLOOD_SSLCERT="${FLOOD_SSLCERT:=/absolute/path/to/certicate/}"
 FLOOD_TORRENTCLIENTPOLLINTERVAL="${FLOOD_TORRENTCLIENTPOLLINTERVAL:=1000*2}"
 
+#Set parameters
 sed -i -e "s|baseURI:\s*'/'|baseURI: '$FLOOD_BASEURI'|g" /var/www/flood/config.js
 sed -i -e "s|dbPath:\s*'./server/db/'|dbPath: '$FLOOD_DBPATH'|g" /var/www/flood/config.js
 sed -i -e "s|floodServerHost:\s*'127.0.0.1'|floodServerHost: '$FLOOD_FLOODSERVERHOST'|g" /var/www/flood/config.js
